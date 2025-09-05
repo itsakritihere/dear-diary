@@ -1,21 +1,22 @@
 const express = require('express');
 const router = express.Router();
+
 const entryController = require('../controllers/entryController');
-const authenticateToken = require('../middlewares/authMiddleware'); // JWT Middleware
+const authMiddleware = require('../middlewares/authMiddleware'); // JWT auth middleware
 
 // Create new diary entry
-router.post('/', authenticateToken, entryController.addEntry);
+router.post('/', authMiddleware, entryController.addEntry);
 
 // Get all diary entries for logged-in user
-router.get('/', authenticateToken, entryController.getEntries);
+router.get('/', authMiddleware, entryController.getEntries);
 
 // Get a single diary entry by ID
-router.get('/:id', authenticateToken, entryController.getEntryById);
+router.get('/:id', authMiddleware, entryController.getEntryById);
 
 // Update diary entry by ID
-router.put('/:id', authenticateToken, entryController.updateEntry);
+router.put('/:id', authMiddleware, entryController.updateEntry);
 
 // Delete diary entry by ID
-router.delete('/:id', authenticateToken, entryController.deleteEntry);
+router.delete('/:id', authMiddleware, entryController.deleteEntry);
 
 module.exports = router;

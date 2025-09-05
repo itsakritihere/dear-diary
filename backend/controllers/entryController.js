@@ -1,52 +1,69 @@
+const { body, validationResult } = require('express-validator');
 const DiaryEntry = require('../models/DiaryEntry');
 
-const addEntry = async (req, res) => {
+// Validation middleware for entry input
+exports.validateEntry = [
+  body('date').notEmpty().withMessage('Date is required'),
+  body('content').notEmpty().withMessage('Content is required'),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ success: false, errors: errors.array() });
+    }
+    next();
+  },
+];
+
+// Add new diary entry
+exports.addEntry = async (req, res) => {
   try {
     const { date, mood, content } = req.body;
     const userId = req.user.userId;
 
     const entry = new DiaryEntry({ user: userId, date, mood, content });
-    await entry.save();
+    const savedEntry = await entry.save();
 
-    res.status(201).json({ message: 'Entry saved', entry });
+    res.status(201).json({ success: true, data: savedEntry, message: 'Entry saved' });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Internal Server Error' });
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
   }
 };
 
-const getEntries = async (req, res) => {
+// Get all diary entries for logged-in user
+exports.getEntries = async (req, res) => {
   try {
     const userId = req.user.userId;
-
     const entries = await DiaryEntry.find({ user: userId }).sort({ date: -1 });
-    res.json(entries);
+    res.json({ success: true, data: entries });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Internal Server Error' });
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
   }
 };
 
-const getEntryById = async (req, res) => {
+// Get one diary entry by ID
+exports.getEntryById = async (req, res) => {
   try {
     const entry = await DiaryEntry.findById(req.params.id);
 
     if (!entry || entry.user.toString() !== req.user.userId) {
-      return res.status(404).json({ message: 'Entry not found' });
+      return res.status(404).json({ success: false, message: 'Entry not found' });
     }
-    res.json(entry);
+    res.json({ success: true, data: entry });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Internal Server Error' });
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
   }
 };
 
-const updateEntry = async (req, res) => {
+// Update diary entry by ID
+exports.updateEntry = async (req, res) => {
   try {
     const entry = await DiaryEntry.findById(req.params.id);
 
     if (!entry || entry.user.toString() !== req.user.userId) {
-      return res.status(404).json({ message: 'Entry not found' });
+      return res.status(404).json({ success: false, message: 'Entry not found or not authorized' });
     }
 
     // Update fields if provided
@@ -54,34 +71,27 @@ const updateEntry = async (req, res) => {
     entry.mood = req.body.mood || entry.mood;
     entry.date = req.body.date || entry.date;
 
-    await entry.save();
-    res.json(entry);
+    const updatedEntry = await entry.save();
+    res.json({ success: true, data: updatedEntry });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Internal Server Error' });
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
   }
 };
 
-const deleteEntry = async (req, res) => {
+// Delete diary entry by ID
+exports.deleteEntry = async (req, res) => {
   try {
     const entry = await DiaryEntry.findById(req.params.id);
 
     if (!entry || entry.user.toString() !== req.user.userId) {
-      return res.status(404).json({ message: 'Entry not found' });
+      return res.status(404).json({ success: false, message: 'Entry not found or not authorized' });
     }
 
     await entry.deleteOne();
-    res.json({ message: 'Entry deleted' });
+    res.json({ success: true, message: 'Entry deleted' });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Internal Server Error' });
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
   }
-};
-
-module.exports = {
-  addEntry,
-  getEntries,
-  getEntryById,
-  updateEntry,
-  deleteEntry,
 };
