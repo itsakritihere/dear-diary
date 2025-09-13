@@ -25,6 +25,8 @@ app.use('/api/diary', entryRoutes);
 app.get("/", (req, res) => {
   res.send("API is running");
 });
+// Dashboard route - add this
+
 
 // Catch-all 404 handler
 app.use((req, res, next) => {
