@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // ADD THIS IMPORT
 import "./Register.css";
+const baseUrl = process.env.REACT_APP_API_URL;
 
 
 export default function Register() {
@@ -23,7 +24,7 @@ export default function Register() {
     }
 
     try {
-      const response = await fetch("http://localhost:5001/api/auth/register", {
+      const response = await(`${baseUrl}/api/auth/register`,  {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password }),

@@ -3,6 +3,9 @@ import { motion } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./AddEntry.css";
 import Sidebar from "../components/Sidebar";
+const baseUrl = process.env.REACT_APP_API_URL;
+
+
 
 export default function AddEntry() {
   const [date, setDate] = useState("");
@@ -24,14 +27,15 @@ export default function AddEntry() {
     }
 
     try {
-      const response = await fetch("http://localhost:5001/api/diary", {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`, // Include JWT token in headers
-        },
-        body: JSON.stringify({ date, content: entry }),
-      });
+   const response = await fetch(`${baseUrl}/api/diary`, {
+  method: "POST",
+  headers: { 
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${token}`, // Include JWT token in headers
+  },
+  body: JSON.stringify({ date, content: entry }),
+});
+
 
       const data = await response.json();
 

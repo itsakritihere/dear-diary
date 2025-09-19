@@ -2,16 +2,23 @@ import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Dashboard.css";
 import Sidebar from "../components/Sidebar";
-
+const baseUrl = process.env.REACT_APP_API_URL;
 export default function Dashboard() {
   const [entries, setEntries] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5001/api/auth/Dashboard") // adjust URL if needed
-      .then((res) => res.json())
-      .then((data) => setEntries(data))
-      .catch((err) => console.error("Error fetching diary entries:", err));
-  }, []);
+  const fetchEntries = async () => {
+    try {
+      fetch(`${baseUrl}/api/auth/Dashboard`);
+      const data = await response.json();
+      setEntries(data);
+    } catch (err) {
+      console.error("Error fetching diary entries:", err);
+    }
+  };
+
+  fetchEntries();
+}, []);
 
   return (
     <div className="dashboard d-flex">
