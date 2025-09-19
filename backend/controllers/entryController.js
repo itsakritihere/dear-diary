@@ -1,6 +1,7 @@
 const { body, validationResult } = require('express-validator');
 const DiaryEntry = require('../models/DiaryEntry');
 
+
 // Validation middleware for entry input
 exports.validateEntry = [
   body('date').notEmpty().withMessage('Date is required'),
