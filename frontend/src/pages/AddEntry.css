@@ -1,0 +1,55 @@
+.add-entry-container {
+  height: 100vh;
+    background-image: url('../components/photos/c.jpg');
+     background-size: cover;
+  background-position: center;
+  font-family: "Poppins", sans-serif;
+}
+
+.entry-card {
+  background: #fff0f6;
+  border-radius: 20px;
+  max-width: 500px;
+  width: 100%;
+  animation: floaty 3s infinite ease-in-out;
+}
+
+.diary-title {
+  color: #d63384;
+  font-weight: bold;
+}
+
+.diary-textarea {
+  border-radius: 12px;
+  resize: none;
+  border: 2px solid #f783ac;
+  transition: 0.3s ease;
+}
+
+.diary-textarea:focus {
+  border-color: #d63384;
+  box-shadow: 0px 0px 10px rgba(214, 51, 132, 0.4);
+}
+
+.btn-diary {
+  background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+  border: none;
+  font-weight: bold;
+  color: #fff;
+  border-radius: 15px;
+  padding: 10px;
+  transition: 0.3s ease;
+}
+
+.btn-diary:hover {
+  background: linear-gradient(45deg, #fbc2eb, #a6c1ee);
+}
+
+@keyframes floaty {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}

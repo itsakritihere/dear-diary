@@ -1,0 +1,67 @@
+.register-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Takes full viewport height but content centered */
+  width: 100vw;
+  background-image: url('../components/photos/a.jpg');
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.register-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(221, 163, 163, 0.6);
+  z-index: 1;
+}
+
+.register-card {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.4);
+
+  width: 400px;           /* Same width as login */
+  min-height: 480px;      /* Fix min height roughly as login */
+  padding: 30px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  /* Vertically center content if smaller height */
+  height: auto;             /* Height grows as per content */
+}
+
+.register-btn:hover, .btn-diary:hover {
+  background: linear-gradient(135deg, #a06cd5, #6a4c93);
+  transform: scale(1.05);
+}
+
+.redirect-text {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #666;
+  text-align: center;
+}
+
+.redirect-text a {
+  color: #6a4c93;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.redirect-text a:hover {
+  text-decoration: underline;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

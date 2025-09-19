@@ -1,0 +1,85 @@
+/* Container layout */
+.view-container {
+  display: flex;
+  min-height: 100vh;
+  background-image: url('../components/photos/c.jpg');
+     background-size: cover;
+  background-position: center;
+}
+
+/* Sidebar handled inside Sidebar component */
+.sidebar {
+  width: 250px;
+  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+/* Main content */
+.entries-container {
+  margin-left: 250px; /* same as sidebar */
+  padding: 40px 30px;
+  width: 100%;
+}
+
+/* Title */
+.entries-title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+/* Empty state */
+.empty-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  font-size: 1.2rem;
+  color: #777;
+}
+
+/* Entries grid */
+.entries-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Individual entry card */
+.entry-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.entry-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Entry header */
+.entry-header {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+.entry-date {
+  font-weight: 600;
+  color: #555;
+}
+
+/* Entry content */
+.entry-content p {
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.5;
+  white-space: pre-wrap; /* preserves line breaks */
+}
